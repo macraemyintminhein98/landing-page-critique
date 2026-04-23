@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Critique</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Landing Page Critique</h1>
+        <p>Paste your landing page URL below & get instant, actionable feedback.</p>
+        <form id="critiqueForm">
+            <input type="url" id="pageUrl" placeholder="https://yourlandingpage.com" required>
+            <button type="submit">Get Critique</button>
+        </form>
+        <div id="loading" style="display:none;">Analyzing your page...</div>
+        <div id="critiqueResult"></div>
+        <p class="disclaimer">Powered by AI. Critiques are suggestions, not guarantees.</p>
+    </div>
+    <script>
+        const stripe = Stripe('pk_test_TYooMQauVDyHTPwszHqdfHTG'); // Replace with your actual public key
+        document.getElementById('critiqueForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('critiqueResult').innerHTML = '';
+            const url = document.getElementById('pageUrl').value;
+            // In a real app, this would trigger a serverless function that handles payment and then critique.
+            // For this MVP, we simulate or redirect to potential checkout.
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('critiqueResult').innerHTML = '<p>Critique generation triggered! Check your email or a payment redirect would happen here.</p>';
+            // Example: Redirect to a Stripe Checkout Session ID from your backend
+            // const response = await fetch('/api/create-checkout-session', {
+            //     // ... send URL and price
+            // });
+            // const session = await response.json();
+            // stripe.redirectToCheckout({ sessionId: session.id });
+        });
+    </script>
+    <style>
+        body { font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; color: #333; }
+        .container { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 600px; text-align: center; }
+        h1 { color: #2c3e50; margin-bottom: 15px; }
+        p { margin-bottom: 25px; line-height: 1.6; }
+        input[type="url"] { width: calc(100% - 22px); padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+        button { background-color: #3498db; color: white; padding: 12px 25px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; transition: background-color 0.3s ease; }
+        button:hover { background-color: #2980b9; }
+        #loading { margin-top: 20px; color: #555; }
+        #critiqueResult { margin-top: 30px; text-align: left; background: #e8f6f3; padding: 20px; border-radius: 8px; border-left: 5px solid #2ecc71; }
+        .disclaimer { font-size: 0.8em; color: #888; margin-top: 30px; }
+    </style>
+</body>
+</html>
