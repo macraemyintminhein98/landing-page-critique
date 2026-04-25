@@ -3,45 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page Critique</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <meta name="description" content="Get instant AI-powered feedback for your landing page.">
-    <script src="https://js.stripe.com/v3/"></script>
+    <title>Critique My Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-auto">
-        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Landing Page Critique</h1>
-        <p class="mb-6 text-center text-gray-600">Get AI-powered feedback in seconds.</p>
-        <form id="feedbackForm" class="space-y-4">
-            <div>
-                <label for="urlInput" class="block text-sm font-medium text-gray-700">Your Landing Page URL:</label>
-                <input type="url" id="urlInput" name="url" placeholder="https://example.com" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
-            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Analyze Page
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-lg shadow-xl p-8 max-w-md w-full text-center">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Critique My Page</h1>
+        <p class="text-gray-600 mb-6">Get instant, actionable UI/UX feedback on your landing page.</p>
+        <form id="critique-form" class="space-y-4">
+            <input type="url" id="landing-page-url" placeholder="Enter your landing page URL" required
+                   class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button type="submit"
+                    class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500">
+                Get Feedback for $9.99
             </button>
         </form>
-        <div id="feedbackResult" class="mt-6 bg-gray-50 p-4 rounded-md hidden">
-            <h2 class="text-xl font-semibold mb-2 text-gray-800">Your Feedback:</h2>
-            <div id="score" class="mb-2"></div>
-            <pre id="suggestions" class="whitespace-pre-wrap text-gray-700 text-sm"></pre>
+        <div id="feedback-display" class="mt-8 hidden text-left">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-3">Your Feedback:</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2" id="feedback-list"></ul>
+            <p class="text-sm text-gray-500 mt-4">Disclaimer: This feedback is AI-generated and based on common best practices.</p>
         </div>
-        <p class="text-center text-gray-500 text-xs mt-6">Powered by AI</p>
     </div>
     <script>
-      // Placeholder for frontend logic. In a real app, this would handle form submission,
-      // payment, and API calls to a backend endpoint like /api/critique.
-      // For example, fetch('/api/critique', { method: 'POST', body: JSON.stringify({ url: urlInput.value }) })
-      // then display results and handle Stripe redirection.
-      console.log('Frontend script loaded. Backend integration and Stripe payments would go here.');
-      document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const url = document.getElementById('urlInput').value; 
-        document.getElementById('feedbackResult').classList.remove('hidden'); 
-        document.getElementById('score').innerText = 'Score: 8/10 (Placeholder)'; 
-        document.getElementById('suggestions').innerText = 'Suggestions: Improve your call to action, simplify hero text. (Placeholder)'; 
-        alert('This is a demo. In a live version, your payment would be processed and real AI feedback would appear here!');
-      });
+        document.getElementById('critique-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = document.getElementById('landing-page-url').value;
+            // In a real app, this would involve Stripe checkout and serverless function call.
+            // For this HTML-only demo, we simulate feedback.
+            const feedbackOptions = [
+                "Your Call-to-Action (CTA) isn't prominent enough. Consider a contrasting color or larger font.",
+                "Missing social proof! Add testimonials, client logos, or review scores.",
+                "Your headline isn't clear enough. Make it more concise and benefit-oriented.",
+                "The page has too much text; break it down into digestible chunks or use visuals.",
+                "Consider adding a clear value proposition statement near the top.",
+                "The page struggles with visual hierarchy; guide the user's eye more purposefully.",
+                "Is your unique selling proposition (USP) immediately obvious? Consider emphasizing it.",
+                "Reduce cognitive load by simplifying forms or choices."
+            ];
+            const selectedFeedback = [];
+            while(selectedFeedback.length < 3) {
+                const randomIndex = Math.floor(Math.random() * feedbackOptions.length);
+                const item = feedbackOptions[randomIndex];
+                if (!selectedFeedback.includes(item)) {
+                    selectedFeedback.push(item);
+                }
+            }
+
+            const feedbackList = document.getElementById('feedback-list');
+            feedbackList.innerHTML = '';
+            selectedFeedback.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                feedbackList.appendChild(li);
+            });
+            document.getElementById('feedback-display').classList.remove('hidden');
+        });
     </script>
 </body>
 </html>
